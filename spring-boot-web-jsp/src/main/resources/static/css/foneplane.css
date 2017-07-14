@@ -1,0 +1,19 @@
+
+
+
+html,
+
+body {height: 100%;}
+
+body {
+
+    font-family: /* 'Istok Web' ,*/ "Helvetica", sans-serif;
+
+    font-size: 12px;
+
+    margin: 0;
+
+    background: url('../images/header_bg.pnp') repeat;
+
+
+}
