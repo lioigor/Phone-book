@@ -1,4 +1,4 @@
-package com.lioigor22.services;
+package com.lioigor22.services.impls;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+
+import com.lioigor22.services.SecurityService;
 
 /**
  * Implementation of {@link SecurityService} interface.

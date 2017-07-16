@@ -37,9 +37,6 @@ public class User {
 
 	private String fullName;
 
-	// @Pattern(regexp = "\\d{3}-\\d{2}-\\d{7}", message = "The specified format
-	// of the phone can not exist for Ukraine!")
-
 	@ManyToMany
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;

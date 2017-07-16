@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -28,6 +30,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 
 @Configuration
+@PropertySource("classpath:lang/json.properties")
 @ComponentScan
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
@@ -39,6 +42,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		messageSource.setBasename("classpath:lang/messages");
 		messageSource.setCacheSeconds(10); // reload messages every 10 seconds
 		return messageSource;
+	}
+
+	@Bean
+	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+		return new PropertySourcesPlaceholderConfigurer();
 	}
 
 }

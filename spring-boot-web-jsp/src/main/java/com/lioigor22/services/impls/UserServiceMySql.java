@@ -1,4 +1,4 @@
-package com.lioigor22.services;
+package com.lioigor22.services.impls;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.lioigor22.model.Role;
 import com.lioigor22.model.User;
-import com.lioigor22.repositories.RoleRepository;
-import com.lioigor22.repositories.UserRepository;
+import com.lioigor22.repositories.MySqlRoleRepository;
+import com.lioigor22.repositories.MySqlUserRepository;
+import com.lioigor22.services.UserService;
 
 /**
  * Implementation of {@link UserService} interface.
@@ -22,13 +23,13 @@ import com.lioigor22.repositories.UserRepository;
  */
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceMySql implements UserService {
 
 	@Autowired
-	private UserRepository userDao;
+	private MySqlUserRepository userDao;
 
 	@Autowired
-	private RoleRepository roleDao;
+	private MySqlRoleRepository roleDao;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;

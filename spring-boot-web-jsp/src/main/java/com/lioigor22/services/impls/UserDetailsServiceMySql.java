@@ -1,4 +1,4 @@
-package com.lioigor22.services;
+package com.lioigor22.services.impls;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lioigor22.model.Role;
 import com.lioigor22.model.User;
-import com.lioigor22.repositories.UserRepository;
+import com.lioigor22.repositories.MySqlUserRepository;
 
 /**
  * Implementation of
@@ -24,10 +24,10 @@ import com.lioigor22.repositories.UserRepository;
  * @author Igor Likarenko
  */
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceMySql implements UserDetailsService {
 
 	@Autowired
-	private UserRepository userDao;
+	private MySqlUserRepository userDao;
 
 	// Here as username is user's username (quick and simple)
 	@Override

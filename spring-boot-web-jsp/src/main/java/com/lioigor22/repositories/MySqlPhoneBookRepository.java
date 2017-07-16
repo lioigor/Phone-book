@@ -9,7 +9,7 @@ import com.lioigor22.model.PhoneBook;
 import com.lioigor22.model.User;
 
 @Repository
-public interface PhoneBookRepository extends JpaRepository<PhoneBook, Long> {
+public interface MySqlPhoneBookRepository extends JpaRepository<PhoneBook, Long> {
 
 	List<PhoneBook> findAllByUser(User user);
 

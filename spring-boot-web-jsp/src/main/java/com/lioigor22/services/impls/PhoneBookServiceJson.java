@@ -1,4 +1,4 @@
-package com.lioigor22.services;
+package com.lioigor22.services.impls;
 
 import java.util.List;
 
@@ -8,17 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lioigor22.model.PhoneBook;
 import com.lioigor22.model.User;
-import com.lioigor22.repositories.PhoneBookRepository;
+import com.lioigor22.repositories.JsonPhoneBookRepository;
+import com.lioigor22.services.PhoneBookService;
 
 @Service
-public class PhoneBookServiceImpl implements PhoneBookService {
+public class PhoneBookServiceJson implements PhoneBookService {
 
 	@Autowired
-	private PhoneBookRepository phoneBookRep;
+	private JsonPhoneBookRepository phoneBookRep;
 
 	@Override
 	@Transactional
 	public void add(PhoneBook phoneBook) {
+
 		this.phoneBookRep.saveAndFlush(phoneBook);
 	}
 
