@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -24,6 +25,7 @@ import com.lioigor22.services.UserService;
 public class UserRegistrationValidator implements Validator {
 
 	@Autowired
+	@Qualifier("userServiceJson")
 	private UserService userService;
 
 	private Pattern pattern;

@@ -37,7 +37,7 @@ public class PhoneBookDto implements Serializable {
 	private String email;
 
 	@Embedded
-	private UserDto userDto;
+	private EmbeddedUserDto embeddedUserDto;
 
 	public PhoneBookDto() {
 
@@ -107,12 +107,18 @@ public class PhoneBookDto implements Serializable {
 		this.email = email;
 	}
 
-	public UserDto getUserDto() {
-		return userDto;
+	public EmbeddedUserDto getEmbeddedUserDto() {
+		return embeddedUserDto;
 	}
 
-	public void setUserDto(UserDto userDto) {
-		this.userDto = userDto;
+	public void setEmbeddedUserDto(EmbeddedUserDto embeddedUserDto) {
+		this.embeddedUserDto = embeddedUserDto;
+	}
+
+	@Override
+	public String toString() {
+		return "PhoneBookDto [id=" + id + ", name=" + name + ", surName=" + surName + ", patronymic=" + patronymic + ", mobilePhone=" + mobilePhone + ", homePhone=" + homePhone + ", address=" + address + ", email=" + email + ", phoneBookUserDto="
+				+ embeddedUserDto + "]";
 	}
 
 }

@@ -1,26 +1,32 @@
 package com.lioigor22.services.impls;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lioigor22.model.Role;
 import com.lioigor22.model.User;
-import com.lioigor22.repositories.JsonRoleRepository;
-import com.lioigor22.repositories.JsonUserRepository;
+import com.lioigor22.repositories.RoleRepositoryJson;
+import com.lioigor22.repositories.UserRepositoryJson;
 import com.lioigor22.services.UserService;
 
 @Service
+@Primary
 public class UserServiceJson implements UserService {
 
 	@Autowired
-	private JsonUserRepository userDao;
+	private UserRepositoryJson userDao;
 
 	@Autowired
-	private JsonRoleRepository roleDao;
+	private RoleRepositoryJson roleDao;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -39,6 +45,17 @@ public class UserServiceJson implements UserService {
 	public User findByUsername(String username) {
 
 		return userDao.findByUsername(username);
+	}
+
+	@PostConstruct
+	private void initRolesForUsers() {
+
+		List<Role> list = new ArrayList<>();
+		list.add(new Role(1L, "ROLE_USER"));
+		list.add(new Role(2L, "ROLE_ADMIN"));
+
+		roleDao.replacedSave(list);
+
 	}
 
 }

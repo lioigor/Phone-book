@@ -2,10 +2,7 @@ package com.lioigor22.model.dtos;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 import com.lioigor22.model.User;
 
@@ -21,21 +18,17 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-@Entity
-public class RoleDto implements Serializable {
+@Embeddable
+public class EmbeddedRoleDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-
 	private String name;
 
-	public RoleDto() {
+	public EmbeddedRoleDto() {
 	}
 
-	public RoleDto(String name) {
+	public EmbeddedRoleDto(String name) {
 
 		this.name = name;
 	}
@@ -46,19 +39,6 @@ public class RoleDto implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	@Override
-	public String toString() {
-		return "RoleDto [id=" + id + ", name=" + name + "]";
 	}
 
 }

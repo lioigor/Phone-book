@@ -3,19 +3,21 @@ package com.lioigor22.services.impls;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lioigor22.model.PhoneBook;
 import com.lioigor22.model.User;
-import com.lioigor22.repositories.JsonPhoneBookRepository;
+import com.lioigor22.repositories.PhoneBookRepositoryJson;
 import com.lioigor22.services.PhoneBookService;
 
 @Service
+@Primary
 public class PhoneBookServiceJson implements PhoneBookService {
 
 	@Autowired
-	private JsonPhoneBookRepository phoneBookRep;
+	private PhoneBookRepositoryJson phoneBookRep;
 
 	@Override
 	@Transactional

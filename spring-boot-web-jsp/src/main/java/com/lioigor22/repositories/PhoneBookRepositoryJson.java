@@ -5,7 +5,7 @@ import java.util.List;
 import com.lioigor22.model.PhoneBook;
 import com.lioigor22.model.User;
 
-public interface JsonPhoneBookRepository {
+public interface PhoneBookRepositoryJson {
 
 	List<PhoneBook> findAllByUser(User user);
 

@@ -8,13 +8,15 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JsonFileDAO implements FileDAO {
+@Component
+public class JsonFileDAO<E> implements FileDAO<E> {
 
 	private static final Logger logger = LoggerFactory.getLogger(JsonFileDAO.class);
 
@@ -30,7 +32,6 @@ public class JsonFileDAO implements FileDAO {
 	private void init(String pathFile) {
 
 		file = new File(workingDirectory + "/src/main/resources" + pathFile);
-		inputStream = TypeReference.class.getResourceAsStream(pathFile);
 
 		try {
 			if (!file.exists()) {
@@ -40,19 +41,19 @@ public class JsonFileDAO implements FileDAO {
 		} catch (IOException io) {
 			logger.error(io.getMessage());
 		}
+
+		inputStream = TypeReference.class.getResourceAsStream(pathFile);
+
 	}
 
 	@Override
-	public List<Object> read(String pathFile) {
+	public List<E> read(String pathFile, Class<E> myClass) {
 
 		init(pathFile);
 
-		TypeReference<List<Object>> typeReference = new TypeReference<List<Object>>() {
-		};
-
-		List<Object> objects;
 		try {
-			objects = mapper.readValue(inputStream, typeReference);
+			// objects = mapper.readValue(inputStream, typeReference);
+			List<E> objects = mapper.readValue(inputStream, mapper.getTypeFactory().constructCollectionType(List.class, myClass));
 
 			return objects;
 		} catch (IOException e) {
@@ -71,12 +72,12 @@ public class JsonFileDAO implements FileDAO {
 	 *
 	 */
 	@Override
-	public void write(String pathFile, Object object) {
+	public void write(String pathFile, E object, Class<E> myClass) {
 
 		init(pathFile);
 
-		List<Object> oldData = new ArrayList<>();
-		oldData.addAll(read(pathFile));
+		List<E> oldData = new ArrayList<>();
+		oldData.addAll(read(pathFile, myClass));
 
 		oldData.add(object); // final data
 
@@ -86,41 +87,33 @@ public class JsonFileDAO implements FileDAO {
 			mapper.writeValue(file, oldData);
 
 		} catch (JsonGenerationException e) {
-			logger.error("JsonGenerationException occurred during to call method writeJson()." + e.getMessage());
+			logger.error("JsonGenerationException occurred during to call method write()." + e.getMessage());
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			logger.error("JsonMappingException occurred during to call method writeJson()." + e.getMessage());
+			logger.error("JsonMappingException occurred during to call method write()." + e.getMessage());
 		} catch (IOException e) {
-			logger.error("IOException occurred during to call method writeJson()." + e.getMessage());
+			logger.error("IOException occurred during to call method write()." + e.getMessage());
 		}
 	}
 
-	// public static void main(String[] args) {
-	//
-	// JsonFileDAO ujs = new JsonFileDAO();
-	//
-	// // UserDto userDto = new UserDto();
-	// // userDto.setId(3);
-	// // userDto.setUsername("petro");
-	// // userDto.setFullName("kalash");
-	// // userDto.setPassword("fgdfgdgdfgd");
-	// // RoleDto roleDto = new RoleDto();
-	// // roleDto.setName("ROLE_USER");
-	// // userDto.setRoleDto(roleDto);
-	// //
-	// // ujs.write(userDto);
-	// //
-	// // String workingDirectory = System.getProperty("userDto.dir");
-	// // System.out.println(workingDirectory +
-	// // "/src/main/resources/json/userDtos.json");
-	// //
-	// // List<Object> list = new ArrayList<>();
-	// // list.addAll(ujs.read());
-	//
-	// for (Object u : ujs.find()) {
-	// System.out.println(u.toString());
-	//
-	// }
-	// }
+	@Override
+	public void writeWithReplace(String pathFile, List<E> objects) {
+
+		init(pathFile);
+
+		try {
+
+			// Convert object to JSON string and save into file directly
+			mapper.writeValue(file, objects);
+
+		} catch (JsonGenerationException e) {
+			logger.error("JsonGenerationException occurred during to call method writeWithReplace()." + e.getMessage());
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			logger.error("JsonMappingException occurred during to call method writeWithReplace()." + e.getMessage());
+		} catch (IOException e) {
+			logger.error("IOException occurred during to call method writeWithReplace()." + e.getMessage());
+		}
+	}
 
 }

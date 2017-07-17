@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lioigor22.model.Role;
 import com.lioigor22.model.User;
-import com.lioigor22.repositories.JsonUserRepository;
+import com.lioigor22.repositories.UserRepositoryJson;
 
 /**
  * Implementation of
@@ -27,13 +27,16 @@ import com.lioigor22.repositories.JsonUserRepository;
 public class UserDetailsServiceJson implements UserDetailsService {
 
 	@Autowired
-	private JsonUserRepository userDao;
+	private UserRepositoryJson userDao;
 
 	// Here as username is user's username (quick and simple)
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userDao.findByUsername(username);
+
+		if (user == null)
+			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
