@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // http://docs.spring.io/spring-boot/docs/current/reference/html/howto-security.html
 // Switch off the Spring Boot security configuration
 // @EnableWebSecurity
+
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 

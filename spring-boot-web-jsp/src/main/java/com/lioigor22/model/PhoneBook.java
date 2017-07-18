@@ -129,4 +129,9 @@ public class PhoneBook {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "PhoneBook [id=" + id + ", name=" + name + ", surName=" + surName + ", patronymic=" + patronymic + ", mobilePhone=" + mobilePhone + ", homePhone=" + homePhone + ", address=" + address + ", email=" + email + ", user=" + user + "]";
+	}
+
 }

@@ -8,7 +8,7 @@ import java.util.Set;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import com.lioigor22.repositories.UserRepositoryJson;
 import com.lioigor22.services.UserService;
 
 @Service
-@Primary
+@Profile("json")
 public class UserServiceJson implements UserService {
 
 	@Autowired
@@ -47,6 +47,10 @@ public class UserServiceJson implements UserService {
 		return userDao.findByUsername(username);
 	}
 
+	/**
+	 * Initialization method (create json files and add users roles)
+	 * 
+	 */
 	@PostConstruct
 	private void initRolesForUsers() {
 

@@ -3,17 +3,20 @@ package com.lioigor22.model.dtos;
 import java.io.Serializable;
 
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.context.annotation.Profile;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-@Entity
+@Profile("json")
 public class PhoneBookDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -37,6 +40,7 @@ public class PhoneBookDto implements Serializable {
 	private String email;
 
 	@Embedded
+	@JsonProperty("User")
 	private EmbeddedUserDto embeddedUserDto;
 
 	public PhoneBookDto() {

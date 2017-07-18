@@ -3,7 +3,7 @@ package com.lioigor22.services.impls;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +13,7 @@ import com.lioigor22.repositories.PhoneBookRepositoryJson;
 import com.lioigor22.services.PhoneBookService;
 
 @Service
-@Primary
+@Profile("json")
 public class PhoneBookServiceJson implements PhoneBookService {
 
 	@Autowired
@@ -48,6 +48,7 @@ public class PhoneBookServiceJson implements PhoneBookService {
 	}
 
 	@Override
+	@Transactional
 	public List<PhoneBook> findAllByUser(User user) {
 
 		return this.phoneBookRep.findAllByUser(user);

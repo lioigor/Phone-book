@@ -20,16 +20,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * messages.properties example content:
  * welcome=Welcome
  * 
- * In Thymeleaf templates you can use this text as following:
- * <h1 th:text="#{welcome}">Welcome</h1>
- * 
- * Switching between locales like this in Thymeleaf template:
- * <p>Language : <a href="?language=en">English</a>|<a href="?language=de">German</a></p>
- * 
  */
 
 @Configuration
-
 @ComponentScan
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 

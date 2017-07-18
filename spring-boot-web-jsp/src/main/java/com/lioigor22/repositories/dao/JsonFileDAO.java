@@ -1,6 +1,8 @@
 package com.lioigor22.repositories.dao;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -11,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,8 +22,8 @@ public class JsonFileDAO<E> implements FileDAO<E> {
 	private static final Logger logger = LoggerFactory.getLogger(JsonFileDAO.class);
 
 	private static ObjectMapper mapper = new ObjectMapper();
-	private static String workingDirectory = System.getProperty("user.dir");
 	private File file;
+	private static String workingDirectory = System.getProperty("user.dir");
 	private InputStream inputStream;
 
 	public JsonFileDAO() {
@@ -42,7 +43,25 @@ public class JsonFileDAO<E> implements FileDAO<E> {
 			logger.error(io.getMessage());
 		}
 
-		inputStream = TypeReference.class.getResourceAsStream(pathFile);
+		try {
+			inputStream = new FileInputStream(file);
+
+		} catch (FileNotFoundException nf) {
+			logger.error("File " + file.getName() + " not found! Info: " + nf.getMessage());
+		}
+
+	}
+
+	private void closeStream() {
+
+		try {
+			if (inputStream != null)
+				inputStream.close();
+
+		} catch (IOException e) { // closing quietly
+
+			logger.error("Closing input stream file " + file.getName() + ". Info: " + e.getMessage());
+		}
 
 	}
 
@@ -55,10 +74,14 @@ public class JsonFileDAO<E> implements FileDAO<E> {
 			// objects = mapper.readValue(inputStream, typeReference);
 			List<E> objects = mapper.readValue(inputStream, mapper.getTypeFactory().constructCollectionType(List.class, myClass));
 
+			closeStream();
 			return objects;
+
 		} catch (IOException e) {
 			logger.error("Can not read file " + file.getName() + ". Info: " + e.getMessage());
 		}
+
+		closeStream();
 
 		return new ArrayList<>();
 	}

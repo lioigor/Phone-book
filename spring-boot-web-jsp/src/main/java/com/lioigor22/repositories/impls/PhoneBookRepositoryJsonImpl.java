@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import com.lioigor22.model.PhoneBook;
@@ -19,6 +20,7 @@ import com.lioigor22.repositories.PhoneBookRepositoryJson;
 import com.lioigor22.repositories.dao.FileDAO;
 
 @Repository
+@Profile("json")
 public class PhoneBookRepositoryJsonImpl<E> implements PhoneBookRepositoryJson {
 
 	@Value("${json.phonebook.storage}")
@@ -68,41 +70,34 @@ public class PhoneBookRepositoryJsonImpl<E> implements PhoneBookRepositoryJson {
 	public void saveAndFlush(PhoneBook phoneBook) {
 
 		List<PhoneBookDto> resultList = new ArrayList<>();
+		List<PhoneBookDto> containsList = file.read(jsonFileUrl, PhoneBookDto.class);
+		long id = getMaximumId(containsList) + 1L;
 
-		for (PhoneBookDto temp : file.read(jsonFileUrl, PhoneBookDto.class)) {
+		if (containsList.isEmpty()) {
 
-			PhoneBookDto forRecord = new PhoneBookDto();
-
-			if (temp.getId() == phoneBook.getId()) {
-
-				forRecord.setAddress(phoneBook.getAddress());
-				forRecord.setEmail(phoneBook.getEmail());
-				forRecord.setHomePhone(phoneBook.getHomePhone());
-				forRecord.setId(phoneBook.getId());
-				forRecord.setMobilePhone(phoneBook.getMobilePhone());
-				forRecord.setName(phoneBook.getName());
-				forRecord.setPatronymic(phoneBook.getPatronymic());
-				forRecord.setSurName(phoneBook.getSurName());
-
-				EmbeddedUserDto user = new EmbeddedUserDto();
-				user.setFullName(phoneBook.getUser().getFullName());
-				user.setPassword(phoneBook.getUser().getPassword());
-				user.setUsername(phoneBook.getUser().getUsername());
-
-				EmbeddedRoleDto roleDto = new EmbeddedRoleDto();
-
-				for (Role role : phoneBook.getUser().getRoles()) {
-
-					roleDto.setName(role.getName());
-					break;
-				}
-				user.setRoleDto(roleDto);
-
-				forRecord.setEmbeddedUserDto(user);
-
-				resultList.add(forRecord);
+			if (phoneBook.getId() == 0) {
+				resultList.add(converter(phoneBook, id));
 			} else {
-				resultList.add(temp);
+
+			}
+
+		} else {
+			if (phoneBook.getId() == 0) {
+
+				resultList.addAll(containsList);
+				resultList.add(converter(phoneBook, id));
+			} else {
+				for (PhoneBookDto temp : containsList) {
+
+					if (temp.getId() == phoneBook.getId()) {
+
+						resultList.add(converter(phoneBook, id));
+
+					} else if (temp.getId() != phoneBook.getId()) {
+						resultList.add(temp);
+					}
+				}
+
 			}
 		}
 
@@ -163,6 +158,49 @@ public class PhoneBookRepositoryJsonImpl<E> implements PhoneBookRepositoryJson {
 		}
 
 		file.writeWithReplace(jsonFileUrl, resultList);
+
+	}
+
+	private long getMaximumId(List<PhoneBookDto> list) {
+
+		long max = 0;
+		for (int i = 0; i < list.size(); i++)
+			if (max < list.get(i).getId())
+				max = list.get(i).getId();
+		return max;
+	}
+
+	private PhoneBookDto converter(PhoneBook phoneBook, long id) {
+
+		PhoneBookDto forRecord = new PhoneBookDto();
+
+		forRecord.setAddress(phoneBook.getAddress());
+		forRecord.setEmail(phoneBook.getEmail());
+		forRecord.setHomePhone(phoneBook.getHomePhone());
+		forRecord.setId(id);
+		forRecord.setMobilePhone(phoneBook.getMobilePhone());
+		forRecord.setName(phoneBook.getName());
+		forRecord.setPatronymic(phoneBook.getPatronymic());
+		forRecord.setSurName(phoneBook.getSurName());
+
+		EmbeddedUserDto user = new EmbeddedUserDto();
+		user.setId(phoneBook.getId());
+		user.setFullName(phoneBook.getUser().getFullName());
+		user.setPassword(phoneBook.getUser().getPassword());
+		user.setUsername(phoneBook.getUser().getUsername());
+
+		EmbeddedRoleDto roleDto = new EmbeddedRoleDto();
+
+		for (Role role : phoneBook.getUser().getRoles()) {
+
+			roleDto.setName(role.getName());
+			break;
+		}
+		user.setRoleDto(roleDto);
+
+		forRecord.setEmbeddedUserDto(user);
+
+		return forRecord;
 
 	}
 

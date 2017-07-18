@@ -54,6 +54,8 @@
 	border: solid 1px #c2c2c2;
 	top: 40px;
 	left: -70px;
+	
+	body { padding-top:50px; }
 }
 </style>
 
@@ -83,6 +85,14 @@
 <script type="text/javascript"
 	src="<c:url value="/js/jquery.easing.1.2.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/script.js"/>"></script>
+
+<!-- Sort and filter table -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
+ 	<link href="<c:url value="/css/font-awesome.min.css" />" rel="stylesheet"
+	type="text/css" />
+   
+	<script type="text/javascript" src="<c:url value="/js/filter.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/js/angular.min.js"/>"></script>
 
 <!--[if lt IE 9]>
 	<script type="text/javascript" src="<c:url value="/js/html5.js"/>"></script>
@@ -126,16 +136,23 @@
 				</div>
 				<div class="wrapper">
 					<h1>
-						<a href="${pageContext.request.contextPath}/home" id="logo">Phone book</a>
+						<a href="${pageContext.request.contextPath}/home" id="logo">Phone
+							book</a>
 					</h1>
 					<nav>
 						<ul id="menu">
-						<li><a href="${pageContext.request.contextPath}/home"><span><span>Home</span></span></a></li>
-						
-						<li id="menu_active" class="nav4"><a href="${pageContext.request.contextPath}/phonebook"><span><span>My phone book</span></span></a></li>
-						<li class="nav4"><a href="${pageContext.request.contextPath}/login"><span><span>Log In</span></span></a></li>
-						<li class="nav5"><a href="${pageContext.request.contextPath}/registration"><span><span>Sign Up</span></span></a></li>
-					</ul>
+							<li><a href="${pageContext.request.contextPath}/home"><span><span>Home</span></span></a></li>
+
+							<li id="menu_active" class="nav4"><a
+								href="${pageContext.request.contextPath}/phonebook"><span><span>My
+											phone book</span></span></a></li>
+							<li class="nav4"><a
+								href="${pageContext.request.contextPath}/login"><span><span>Log
+											In</span></span></a></li>
+							<li class="nav5"><a
+								href="${pageContext.request.contextPath}/registration"><span><span>Sign
+											Up</span></span></a></li>
+						</ul>
 					</nav>
 				</div>
 			</header>
@@ -168,85 +185,92 @@
 												<spring:message text="Name*" />
 											</form:label></td>
 										<td><spring:bind path="name">
-										<div class="form-group ${status.error ? 'has-error' : ''}">
-											<form:input type="text" path="name" class="form-control"
-												autofocus="true"></form:input>											 
-										</div>
-									</spring:bind></td>
-									<td style="background-color:#f2f2f2"><font color="red"><form:errors path="name"></form:errors></font></td>
-									</tr>																		
+												<div class="form-group ${status.error ? 'has-error' : ''}">
+													<form:input type="text" path="name" class="form-control"
+														autofocus="true"></form:input>
+												</div>
+											</spring:bind></td>
+										<td style="background-color: #f2f2f2"><font color="red"><form:errors
+													path="name"></form:errors></font></td>
+									</tr>
 									<tr>
 										<td><form:label path="surName">
 												<spring:message text="Surname*" />
 											</form:label></td>
 										<td><spring:bind path="surName">
-										<div class="form-group ${status.error ? 'has-error' : ''}">
-											<form:input type="text" path="surName" class="form-control"
-												autofocus="true"></form:input>											 
-										</div>
-									</spring:bind></td>
-									<td style="background-color:#f2f2f2"><font color="red"><form:errors path="surName"></form:errors></font></td>
-									</tr>	
-										<tr>
+												<div class="form-group ${status.error ? 'has-error' : ''}">
+													<form:input type="text" path="surName" class="form-control"
+														autofocus="true"></form:input>
+												</div>
+											</spring:bind></td>
+										<td style="background-color: #f2f2f2"><font color="red"><form:errors
+													path="surName"></form:errors></font></td>
+									</tr>
+									<tr>
 										<td><form:label path="patronymic">
 												<spring:message text="Patronymic*" />
 											</form:label></td>
 										<td><spring:bind path="patronymic">
-										<div class="form-group ${status.error ? 'has-error' : ''}">
-											<form:input type="text" path="patronymic" class="form-control"
-												autofocus="true"></form:input>											 
-										</div>
-									</spring:bind></td>
-									<td style="background-color:#f2f2f2"><font color="red"><form:errors path="patronymic"></form:errors></font></td>
-									</tr>	
+												<div class="form-group ${status.error ? 'has-error' : ''}">
+													<form:input type="text" path="patronymic"
+														class="form-control" autofocus="true"></form:input>
+												</div>
+											</spring:bind></td>
+										<td style="background-color: #f2f2f2"><font color="red"><form:errors
+													path="patronymic"></form:errors></font></td>
+									</tr>
 									<tr>
 										<td><form:label path="mobilePhone">
 												<spring:message text="Mobile phone*" />
 											</form:label></td>
 										<td><spring:bind path="mobilePhone">
-										<div class="form-group ${status.error ? 'has-error' : ''}">
-											<form:input type="text" path="mobilePhone" class="form-control"
-												autofocus="true"></form:input>											 
-										</div>
-									</spring:bind></td>
-									<td style="background-color:#f2f2f2"><font color="red"><form:errors path="mobilePhone"></form:errors></font></td>
-									</tr>	
-								<tr>
+												<div class="form-group ${status.error ? 'has-error' : ''}">
+													<form:input type="text" path="mobilePhone"
+														class="form-control" autofocus="true"></form:input>
+												</div>
+											</spring:bind></td>
+										<td style="background-color: #f2f2f2"><font color="red"><form:errors
+													path="mobilePhone"></form:errors></font></td>
+									</tr>
+									<tr>
 										<td><form:label path="homePhone">
 												<spring:message text="Home phone" />
 											</form:label></td>
 										<td><spring:bind path="homePhone">
-										<div class="form-group ${status.error ? 'has-error' : ''}">
-											<form:input type="text" path="homePhone" class="form-control"
-												autofocus="true"></form:input>											 
-										</div>
-									</spring:bind></td>
-									<td style="background-color:#f2f2f2"><font color="red"><form:errors path="homePhone"></form:errors></font></td>
-									</tr>	
-										<tr>
+												<div class="form-group ${status.error ? 'has-error' : ''}">
+													<form:input type="text" path="homePhone"
+														class="form-control" autofocus="true"></form:input>
+												</div>
+											</spring:bind></td>
+										<td style="background-color: #f2f2f2"><font color="red"><form:errors
+													path="homePhone"></form:errors></font></td>
+									</tr>
+									<tr>
 										<td><form:label path="address">
 												<spring:message text="Address" />
 											</form:label></td>
 										<td><spring:bind path="address">
-										<div class="form-group ${status.error ? 'has-error' : ''}">
-											<form:input type="text" path="address" class="form-control"
-												autofocus="true"></form:input>											 
-										</div>
-									</spring:bind></td>
-									<td style="background-color:#f2f2f2"><font color="red"><form:errors path="address"></form:errors></font></td>
-									</tr>	
-										<tr>
+												<div class="form-group ${status.error ? 'has-error' : ''}">
+													<form:input type="text" path="address" class="form-control"
+														autofocus="true"></form:input>
+												</div>
+											</spring:bind></td>
+										<td style="background-color: #f2f2f2"><font color="red"><form:errors
+													path="address"></form:errors></font></td>
+									</tr>
+									<tr>
 										<td><form:label path="email">
 												<spring:message text="Email" />
 											</form:label></td>
 										<td><spring:bind path="email">
-										<div class="form-group ${status.error ? 'has-error' : ''}">
-											<form:input type="text" path="email" class="form-control"
-												autofocus="true"></form:input>											 
-										</div>
-									</spring:bind></td>
-									<td style="background-color:#f2f2f2"><font color="red"><form:errors path="email"></form:errors></font></td>
-									</tr>	
+												<div class="form-group ${status.error ? 'has-error' : ''}">
+													<form:input type="text" path="email" class="form-control"
+														autofocus="true"></form:input>
+												</div>
+											</spring:bind></td>
+										<td style="background-color: #f2f2f2"><font color="red"><form:errors
+													path="email"></form:errors></font></td>
+									</tr>
 									<tr>
 										<td colspan="2"><c:if test="${phonebook.id != 0}">
 												<input type="submit"
@@ -269,34 +293,96 @@
 
 							<c:if test="${!empty listPhoneBooks}">
 								<h2>Your phone book:</h2>
-								<table class="tg">
-									<tr>
-										<th width="80">ID</th>
-										<th width="120">Name</th>
-										<th width="120">SurName</th>
-										<th width="80">Patronymic</th>
-										<th width="80">Mobile phone</th>
-										<th width="80">Home phone</th>
-										<th width="80">Address</th>
-										<th width="80">Email</th>			
-										<th width="60">[Edit]</th>
-										<th width="60">[Delete]</th>
-									</tr>
-									<c:forEach items="${listPhoneBooks}" var="phonebook">
-										<tr>
-											<td>${phonebook.id}</td>
-											<td>${phonebook.name}</td>
-											<td>${phonebook.surName}</td>
-											<td>${phonebook.patronymic}</td>
-											<td>${phonebook.mobilePhone}</td>
-											<td>${phonebook.homePhone}</td>
-											<td>${phonebook.address}</td>
-											<td>${phonebook.email}</td>										
-											<td><a href="<c:url value='/edit/${phonebook.id}' />">Edit</a></td>
-											<td><a href="<c:url value='/remove/${phonebook.id}' />">Delete</a></td>
-										</tr>
-									</c:forEach>
-								</table>
+
+
+
+								<div class="container" ng-app="sortApp"
+									ng-controller="mainController">
+
+									<div class="alert alert-info">
+
+										<p>Search: {{ searchSurname }}</p>
+									</div>
+
+									<form>
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa fa-search"></i>
+												</div>
+												<input type="text" class="form-control"
+													placeholder="Search by surname" ng-model="searchSurname">
+											</div>
+										</div>
+									</form>
+
+									<table class="table table-bordered table-striped">
+
+										<thead>
+											<tr>
+												<th width="80">ID</th>
+
+												<td><a href="#"
+													ng-click="sortType = 'name'; sortReverse = !sortReverse">
+														Name <span ng-show="sortType == 'name' && !sortReverse"
+														class="fa fa-caret-down"></span> <span
+														ng-show="sortType == 'name' && sortReverse"
+														class="fa fa-caret-up"></span>
+												</a></td>
+												<td><a href="#"
+													ng-click="sortType = 'surname'; sortReverse = !sortReverse">
+														Surname <span
+														ng-show="sortType == 'surname' && !sortReverse"
+														class="fa fa-caret-down"></span> <span
+														ng-show="sortType == 'surname' && sortReverse"
+														class="fa fa-caret-up"></span>
+												</a></td>
+												<th width="80">Patronymic</th>
+
+												<td><a href="#"
+													ng-click="sortType = 'mobile'; sortReverse = !sortReverse">
+														Mobile phone <span
+														ng-show="sortType == 'mobile' && !sortReverse"
+														class="fa fa-caret-down"></span> <span
+														ng-show="sortType == 'mobile' && sortReverse"
+														class="fa fa-caret-up"></span>
+												</a></td>
+												<th width="80">Home phone</th>
+
+												<th width="80">Address</th>
+
+												<th width="80">Email</th>
+
+												<th width="60">[Edit]</th>
+
+												<th width="60">[Delete]</th>
+
+											</tr>
+										</thead>
+
+										<tbody>
+											<c:forEach items="${listPhoneBooks}" var="phonebook">
+												<tr
+													ng-repeat="phonebooks | orderBy:sortType:sortReverse | filter:searchSurname">
+													<td>${phonebook.id}</td>
+													<td>${phonebook.name}</td>
+													<td>${phonebook.surName}</td>
+													<td>${phonebook.patronymic}</td>
+													<td>${phonebook.mobilePhone}</td>
+													<td>${phonebook.homePhone}</td>
+													<td>${phonebook.address}</td>
+													<td>${phonebook.email}</td>
+													<td><a href="<c:url value='/edit/${phonebook.id}' />">Edit</a></td>
+													<td><a
+														href="<c:url value='/remove/${phonebook.id}' />">Delete</a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+
+									</table>
+
+								</div>
+						
 							</c:if>
 						</ul>
 					</div>
@@ -338,7 +424,8 @@
 								src="<c:url value="/images/icon1.jpg"/>" alt="">Facebook</a></li>
 						<li><a href="https://twitter.com/Igor_Likarenko"><img
 								src="<c:url value="/images/icon2.jpg"/>" alt="">Twitter</a></li>
-						<li><a href="https://www.linkedin.com/in/igor-likarenko-4b7ab1123/"><img
+						<li><a
+							href="https://www.linkedin.com/in/igor-likarenko-4b7ab1123/"><img
 								src="<c:url value="/images/icon3.jpg"/>" alt="">LinkedIn</a></li>
 					</ul>
 				</section>

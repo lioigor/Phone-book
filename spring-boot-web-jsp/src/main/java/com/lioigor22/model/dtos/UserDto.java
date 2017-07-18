@@ -3,17 +3,20 @@ package com.lioigor22.model.dtos;
 import java.io.Serializable;
 
 import javax.persistence.Embedded;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.context.annotation.Profile;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-@Entity
+@Profile("json")
 public class UserDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +33,8 @@ public class UserDto implements Serializable {
 	private String fullName;
 
 	@Embedded
-	private EmbeddedRoleDto userRoleDto;
+	@JsonProperty("Role")
+	private EmbeddedRoleDto embeddedRoleDto;
 
 	public UserDto() {
 
@@ -69,16 +73,16 @@ public class UserDto implements Serializable {
 	}
 
 	public EmbeddedRoleDto getRoleDto() {
-		return userRoleDto;
+		return embeddedRoleDto;
 	}
 
 	public void setRoleDto(EmbeddedRoleDto userRoleDto) {
-		this.userRoleDto = userRoleDto;
+		this.embeddedRoleDto = userRoleDto;
 	}
 
 	@Override
 	public String toString() {
-		return "UserDto [id=" + id + ", username=" + username + ", password=" + password + ", fullName=" + fullName + ", userRoleDto=" + userRoleDto + "]";
+		return "UserDto [id=" + id + ", username=" + username + ", password=" + password + ", fullName=" + fullName + ", userRoleDto=" + embeddedRoleDto + "]";
 	}
 
 }
