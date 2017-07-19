@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Log In</title>
+<title>Error page</title>
 
 <style type="text/css">
 .block1 {
@@ -74,17 +74,24 @@
 			<header>
 				<div class="wrapper">
 					<nav>
-						<ul id="top_nav">					
-		<c:if test="${pageContext.request.userPrincipal.name != null}">
-        	<form id="logoutForm" method="POST" action="${pageContext.request.contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        	</form>
-			<font color="green">${pageContext.request.userPrincipal.name}</font> | <a onclick="document.forms['logoutForm'].submit()"><font color="red">Sign out</font></a>
-        	</c:if>
-						<li><a href="${pageContext.request.contextPath}/login">Log In</a></li>
-						<li><a href="${pageContext.request.contextPath}/registration">Sign Up</a></li>
+						<ul id="top_nav">
+							<c:if test="${pageContext.request.userPrincipal.name != null}">
+								<form id="logoutForm" method="POST"
+									action="${pageContext.request.contextPath}/logout">
+									<input type="hidden" name="${_csrf.parameterName}"
+										value="${_csrf.token}" />
+								</form>
+								<font color="green">${pageContext.request.userPrincipal.name}</font> | <a
+									onclick="document.forms['logoutForm'].submit()"><font
+									color="red">Sign out</font></a>
+							</c:if>
+							<li><a href="${pageContext.request.contextPath}/login">Log
+									In</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/registration">Sign
+									Up</a></li>
 
-					</ul>
+						</ul>
 					</nav>
 					<span class="date">Monday, June 6, 2016 &nbsp; &nbsp; 17:19</span>
 				</div>
@@ -95,60 +102,37 @@
 					</h1>
 					<nav>
 						<ul id="menu">
-						<li><a href="${pageContext.request.contextPath}/home"><span><span>Home</span></span></a></li>
-						
-						<li><a href="${pageContext.request.contextPath}/phonebook"><span><span>My phone book</span></span></a></li>
-						<li id="menu_active" class="nav4"><a href="${pageContext.request.contextPath}/login"><span><span>Log In</span></span></a></li>
-						<li class="nav5"><a href="${pageContext.request.contextPath}/registration"><span><span>Sign Up</span></span></a></li>
-					</ul>
+							<li id="menu_active"><a href="#"><span><span>Error</span></span></a></li>
+							<li><a href="${pageContext.request.contextPath}/home"><span><span>Home</span></span></a></li>
+
+							<li><a href="${pageContext.request.contextPath}/phonebook"><span><span>My
+											phone book</span></span></a></li>
+							<li class="nav4"><a
+								href="${pageContext.request.contextPath}/login"><span><span>Log
+											In</span></span></a></li>
+							<li class="nav5"><a
+								href="${pageContext.request.contextPath}/registration"><span><span>Sign
+											Up</span></span></a></li>
+						</ul>
 					</nav>
 				</div>
 			</header>
-<!-- CONTENT -->
+<!-- CONTENT -->			
 			<div align="center">
 
 				<article id="content">
 
+						<h2>Application has encountered an error.</h2>
+						<h2> Please contact support on...</h2>
+
+
+								Failed URL: ${url} Exception: ${exception.message}
+								<c:forEach items="${exception.stackTrace}" var="ste">    ${ste} 
+    							</c:forEach>
 					<section class="col2">
-						<form method="POST"
-							action="${pageContext.request.contextPath}/login"
-							class="form-signin">
+						
 
-							<div class="form-group ${error != null ? 'has-error' : ''}">
-
-
-								<div class="block1">
-
-									<h2>Log in, please</h2>
-
-									<br> <font color="red"> <span>${message}</span> <span>${error}</span>
-									</font>
-									<fieldset id="inputs">
-
-										<input name="username" type="text" class="form-control"
-											placeholder="Username" autofocus="true" /> <input
-											name="password" type="password" class="form-control"
-											placeholder="Password" /> <input type="hidden"
-											name="${_csrf.parameterName}" value="${_csrf.token}" />
-									</fieldset>
-
-									<fieldset id="actions">
-										<input type="submit" id="submit" value="Log In">
-										<!-- if this is login for update, ignore remember me check -->
-										<c:if test="${empty loginUpdate}">
-	
-												Remember Me: <input type="checkbox"
-													name="remember-me" />
-											
-										</c:if>
-										<a href="${pageContext.request.contextPath}/registration">Create
-											an account</a>
-									</fieldset>
-								</div>
-
-							</div>
-						</form>
-
+						
 					</section>
 				</article>
 
@@ -189,7 +173,8 @@
 								src="<c:url value="/images/icon1.jpg"/>" alt="">Facebook</a></li>
 						<li><a href="https://twitter.com/Igor_Likarenko"><img
 								src="<c:url value="/images/icon2.jpg"/>" alt="">Twitter</a></li>
-						<li><a href="https://www.linkedin.com/in/igor-likarenko-4b7ab1123/"><img
+						<li><a
+							href="https://www.linkedin.com/in/igor-likarenko-4b7ab1123/"><img
 								src="<c:url value="/images/icon3.jpg"/>" alt="">LinkedIn</a></li>
 					</ul>
 				</section>

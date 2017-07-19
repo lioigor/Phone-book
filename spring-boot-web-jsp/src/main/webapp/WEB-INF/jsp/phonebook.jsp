@@ -2,6 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="false"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,8 +55,46 @@
 	border: solid 1px #c2c2c2;
 	top: 40px;
 	left: -70px;
-	
-	body { padding-top:50px; }
+}
+
+#filtername {
+	background-image: url('/images/searchicon.png');
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	width: 50%;
+	font-size: 16px;
+	padding: 12px 20px 12px 40px;
+	border: 1px solid #ddd;
+	margin-bottom: 12px;
+}
+
+#filtersurname {
+	background-image: url('/images/searchicon.png');
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	width: 50%;
+	font-size: 16px;
+	padding: 12px 20px 12px 40px;
+	border: 1px solid #ddd;
+	margin-bottom: 12px;
+}
+
+#filterphone {
+	background-image: url('/images/searchicon.png');
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	width: 50%;
+	font-size: 16px;
+	padding: 12px 20px 12px 40px;
+	border: 1px solid #ddd;
+	margin-bottom: 12px;
+}
+
+#myTable {
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ddd;
+	font-size: 18px;
 }
 </style>
 
@@ -85,14 +124,6 @@
 <script type="text/javascript"
 	src="<c:url value="/js/jquery.easing.1.2.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/js/script.js"/>"></script>
-
-<!-- Sort and filter table -->
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootswatch/3.2.0/sandstone/bootstrap.min.css">
- 	<link href="<c:url value="/css/font-awesome.min.css" />" rel="stylesheet"
-	type="text/css" />
-   
-	<script type="text/javascript" src="<c:url value="/js/filter.js"/>"></script>
-	<script type="text/javascript" src="<c:url value="/js/angular.min.js"/>"></script>
 
 <!--[if lt IE 9]>
 	<script type="text/javascript" src="<c:url value="/js/html5.js"/>"></script>
@@ -156,7 +187,7 @@
 					</nav>
 				</div>
 			</header>
-			<!-- content -->
+<!-- CONTENT -->
 			<article id="content">
 				<section class="col1">
 					<div class="singlecol" align="center">
@@ -295,95 +326,43 @@
 								<h2>Your phone book:</h2>
 
 
+								<input type="text" id="filtername" onkeyup="myFunction1()"
+									placeholder="Search by name.." title="Search by name">
+								<input type="text" id="filtersurname" onkeyup="myFunction2()"
+									placeholder="Search by surname.." title="Search by surname">
+								<input type="text" id="filterphone" onkeyup="myFunction3()"
+									placeholder="Search by mobile phone.."
+									title="Search by mobile phone">
 
-								<div class="container" ng-app="sortApp"
-									ng-controller="mainController">
-
-									<div class="alert alert-info">
-
-										<p>Search: {{ searchSurname }}</p>
-									</div>
-
-									<form>
-										<div class="form-group">
-											<div class="input-group">
-												<div class="input-group-addon">
-													<i class="fa fa-search"></i>
-												</div>
-												<input type="text" class="form-control"
-													placeholder="Search by surname" ng-model="searchSurname">
-											</div>
-										</div>
-									</form>
-
-									<table class="table table-bordered table-striped">
-
-										<thead>
-											<tr>
-												<th width="80">ID</th>
-
-												<td><a href="#"
-													ng-click="sortType = 'name'; sortReverse = !sortReverse">
-														Name <span ng-show="sortType == 'name' && !sortReverse"
-														class="fa fa-caret-down"></span> <span
-														ng-show="sortType == 'name' && sortReverse"
-														class="fa fa-caret-up"></span>
-												</a></td>
-												<td><a href="#"
-													ng-click="sortType = 'surname'; sortReverse = !sortReverse">
-														Surname <span
-														ng-show="sortType == 'surname' && !sortReverse"
-														class="fa fa-caret-down"></span> <span
-														ng-show="sortType == 'surname' && sortReverse"
-														class="fa fa-caret-up"></span>
-												</a></td>
-												<th width="80">Patronymic</th>
-
-												<td><a href="#"
-													ng-click="sortType = 'mobile'; sortReverse = !sortReverse">
-														Mobile phone <span
-														ng-show="sortType == 'mobile' && !sortReverse"
-														class="fa fa-caret-down"></span> <span
-														ng-show="sortType == 'mobile' && sortReverse"
-														class="fa fa-caret-up"></span>
-												</a></td>
-												<th width="80">Home phone</th>
-
-												<th width="80">Address</th>
-
-												<th width="80">Email</th>
-
-												<th width="60">[Edit]</th>
-
-												<th width="60">[Delete]</th>
-
-											</tr>
-										</thead>
-
-										<tbody>
-											<c:forEach items="${listPhoneBooks}" var="phonebook">
-												<tr
-													ng-repeat="phonebooks | orderBy:sortType:sortReverse | filter:searchSurname">
-													<td>${phonebook.id}</td>
-													<td>${phonebook.name}</td>
-													<td>${phonebook.surName}</td>
-													<td>${phonebook.patronymic}</td>
-													<td>${phonebook.mobilePhone}</td>
-													<td>${phonebook.homePhone}</td>
-													<td>${phonebook.address}</td>
-													<td>${phonebook.email}</td>
-													<td><a href="<c:url value='/edit/${phonebook.id}' />">Edit</a></td>
-													<td><a
-														href="<c:url value='/remove/${phonebook.id}' />">Delete</a></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-
-									</table>
-
-								</div>
-						
-							</c:if>
+								<table id="myTable" class="tg">
+									<tr>
+										<th width="80">ID</th>
+										<th width="120">Name</th>
+										<th width="120">SurName</th>
+										<th width="80">Patronymic</th>
+										<th width="80">Mobile phone</th>
+										<th width="80">Home phone</th>
+										<th width="80">Address</th>
+										<th width="80">Email</th>
+										<th width="60">[Edit]</th>
+										<th width="60">[Delete]</th>
+									</tr>
+									<c:forEach items="${listPhoneBooks}" var="phonebook">
+										<tr>
+											<td>${phonebook.id}</td>
+											<td>${phonebook.name}</td>
+											<td>${phonebook.surName}</td>
+											<td>${phonebook.patronymic}</td>
+											<td>${phonebook.mobilePhone}</td>
+											<td>${phonebook.homePhone}</td>
+											<td>${phonebook.address}</td>
+											<td>${phonebook.email}</td>
+											<td><a href="<c:url value='/edit/${phonebook.id}' />">Edit</a></td>
+											<td><a href="<c:url value='/remove/${phonebook.id}' />">Delete</a></td>
+										</tr>
+									</c:forEach>
+								</table>
+							</c:if>					
 						</ul>
 					</div>
 
@@ -450,6 +429,63 @@
 	</div>
 	<script type="text/javascript">
 		Cufon.now();
+	</script>
+	<script>
+		function myFunction1() {
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("filtername");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("myTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+	<script>
+		function myFunction2() {
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("filtersurname");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("myTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[2];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+	<script>
+		function myFunction3() {
+			var input, filter, table, tr, td, i;
+			input = document.getElementById("filterphone");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("myTable");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[4];
+				if (td) {
+					if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
 	</script>
 </body>
 </html>
