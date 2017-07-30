@@ -21,7 +21,7 @@ import com.lioigor22.services.impls.UserServiceMySql;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("mysql")
-public class UserServiceMySqlTest {
+public class UserServiceMySqlIT {
 
 	@TestConfiguration
 	static class UserServiceMySqlTestContextConfiguration {

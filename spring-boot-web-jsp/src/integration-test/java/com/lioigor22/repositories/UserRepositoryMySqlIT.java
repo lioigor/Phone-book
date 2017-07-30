@@ -15,7 +15,7 @@ import com.lioigor22.model.User;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ActiveProfiles("mysql")
-public class UserRepositoryMySqlTest {
+public class UserRepositoryMySqlIT {
 
 	@Autowired
 	private TestEntityManager entityManager;
