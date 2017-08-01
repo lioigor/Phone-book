@@ -130,6 +130,73 @@ public class PhoneBook {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((homePhone == null) ? 0 : homePhone.hashCode());
+		result = prime * result + ((mobilePhone == null) ? 0 : mobilePhone.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((patronymic == null) ? 0 : patronymic.hashCode());
+		result = prime * result + ((surName == null) ? 0 : surName.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PhoneBook other = (PhoneBook) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (homePhone == null) {
+			if (other.homePhone != null)
+				return false;
+		} else if (!homePhone.equals(other.homePhone))
+			return false;
+		if (mobilePhone == null) {
+			if (other.mobilePhone != null)
+				return false;
+		} else if (!mobilePhone.equals(other.mobilePhone))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (patronymic == null) {
+			if (other.patronymic != null)
+				return false;
+		} else if (!patronymic.equals(other.patronymic))
+			return false;
+		if (surName == null) {
+			if (other.surName != null)
+				return false;
+		} else if (!surName.equals(other.surName))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "PhoneBook [id=" + id + ", name=" + name + ", surName=" + surName + ", patronymic=" + patronymic + ", mobilePhone=" + mobilePhone + ", homePhone=" + homePhone + ", address=" + address + ", email=" + email + ", user=" + user + "]";
 	}
