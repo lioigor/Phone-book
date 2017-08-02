@@ -32,13 +32,15 @@ public class UserServiceJson implements UserService {
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
-	public void save(User user) {
+	public User save(User user) {
 
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		Set<Role> roles = new HashSet<>();
 		roles.add(roleDao.getOne(1L));
 		user.setRoles(roles);
 		userDao.save(user);
+
+		return user;
 	}
 
 	@Override

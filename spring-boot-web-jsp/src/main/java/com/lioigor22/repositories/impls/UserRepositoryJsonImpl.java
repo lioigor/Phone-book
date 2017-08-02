@@ -55,7 +55,7 @@ public class UserRepositoryJsonImpl implements UserRepositoryJson {
 	}
 
 	@Override
-	public void save(User user) {
+	public User save(User user) {
 
 		List<UserDto> containsList = file.read(jsonFileUrl, UserDto.class);
 		long id = getMaximumId(containsList) + 1L;
@@ -71,6 +71,8 @@ public class UserRepositoryJsonImpl implements UserRepositoryJson {
 		dto.setFullName(user.getFullName());
 
 		file.write(jsonFileUrl, dto, UserDto.class);
+
+		return user;
 
 	}
 
